@@ -24,12 +24,8 @@ let s:args_after = {
     \ 'less': '-f json -s less',
     \ 'scss': '-f json -s scss' }
 
-function! SyntaxCheckers_css_wpscripts_IsAvailable() dict
-    return !executable(self.getExec())
-endfunction
-
 function! SyntaxCheckers_css_wpscripts_GetLocList() dict
-    let makeprg = self.makeprgBuild({ 'exe': 'wp-scripts', 'args_before': 'lint-style', 'args_after': get(s:args_after, self.getFiletype(), '') })
+    let makeprg = self.makeprgBuild({ 'args_before': 'lint-style', 'args_after': get(s:args_after, self.getFiletype(), '') })
 
     let errorformat = '%t:%f:%l:%c:%m'
 
@@ -42,6 +38,7 @@ function! SyntaxCheckers_css_wpscripts_GetLocList() dict
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
+    \ 'exec': 'wp-scripts',
     \ 'filetype': 'css',
     \ 'name': 'wpscripts'})
 

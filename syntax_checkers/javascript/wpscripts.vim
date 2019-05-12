@@ -21,12 +21,8 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! SyntaxCheckers_javascript_wpscripts_IsAvailable() dict
-    return !executable(self.getExec())
-endfunction
-
 function! SyntaxCheckers_javascript_wpscripts_GetLocList() dict
-    let makeprg = self.makeprgBuild({ 'exe': 'wp-scripts', 'args_before': 'lint-js -f compact' })
+    let makeprg = self.makeprgBuild({ 'args_before': 'lint-js -f compact' })
 
     let errorformat =
         \ '%E%f: line %l\, col %c\, Error - %m,' .
@@ -45,6 +41,7 @@ function! SyntaxCheckers_javascript_wpscripts_GetLocList() dict
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
+    \ 'exec': 'wp-scripts',
     \ 'filetype': 'javascript',
     \ 'name': 'wpscripts'})
 
